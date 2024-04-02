@@ -135,20 +135,19 @@ hljs.registerLanguage('rust', rust)
                   :highlight="(text) => hljs.highlight(text, {language: 'javascript'}).value"
       />
       <br>
-      <CodeEditor
-          v-model="text3"
-          header-background-color="rgb(3, 4, 32)"
-          header-font-color="#c9d1d9"
-          background-color="rgb(19, 25, 47)"
-          :highlight-row="false"
-          :read-only="true"
-          code-font-size="15"
-          padding-top="8"
-          padding-bottom="10"
-          :show-header="true"
-          :show-line-number="false"
-          :show-footer="false"
-          :highlight="(text) => hljs.highlight(text, {language: 'xml'}).value">
+      <CodeEditor v-model="text3"
+                  header-background-color="rgb(3, 4, 32)"
+                  header-font-color="#c9d1d9"
+                  background-color="rgb(19, 25, 47)"
+                  :highlight-row="false"
+                  :read-only="true"
+                  code-font-size="15"
+                  padding-top="8"
+                  padding-bottom="10"
+                  :show-header="true"
+                  :show-line-number="false"
+                  :show-footer="false"
+                  :highlight="(text) => hljs.highlight(text, {language: 'xml'}).value">
         <template #headerText>
           <div style="font-size: 10px">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -201,7 +200,11 @@ hljs.registerLanguage('rust', rust)
                   padding-bottom="10"
                   :show-line-number="false"
                   extra-text="sh"
-                  :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"/>
+                  :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value">
+        <template #extraText>
+          <button @click="console.log('yo')">Copy</button>
+        </template>
+      </CodeEditor>
       <br>
       <CodeEditor v-model="text7"
                   background-color="rgb(22, 22, 24)"
