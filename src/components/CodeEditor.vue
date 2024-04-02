@@ -21,7 +21,12 @@ function generateUniqSerial() {
 const id = generateUniqSerial()
 
 const defaultBackgroundColor = '#0d1117'
-
+const extraLocationMap = {
+  'top-left': {top: 10 + 'px', left: 10 + 'px'},
+  'top-right': {top: 10 + 'px', right: 10 + 'px'},
+  'bottom-left': {bottom: 10 + 'px', left: 10 + 'px'},
+  'bottom-right': {bottom: 10 + 'px', right: 10 + 'px'}
+}
 const props = defineProps({
   highlight: {},
 
@@ -37,6 +42,11 @@ const props = defineProps({
   highlightRow: {
     type: Boolean,
     default: false
+  },
+
+  extraLocation: {
+    type: String,
+    default: 'top-right'
   },
 
   extraText: {
@@ -447,8 +457,19 @@ onMounted(() => {
               color: 'white'
           }"/></code>
       </pre>
-        <div v-if="extraText" style="position: absolute; top:10px; right:10px; color: white;">
-          {{ extraText }}
+        <div v-if="extraText"
+             :style="{
+                position: 'absolute',
+                'z-index': 3,
+                top: extraLocationMap[extraLocation].top,
+                bottom: extraLocationMap[extraLocation].bottom,
+                left: extraLocationMap[extraLocation].left,
+                right: extraLocationMap[extraLocation].right,
+                color: 'white'
+        }">
+          <slot name="extraText">
+            {{ extraText }}
+          </slot>
         </div>
       </div>
     </div>
