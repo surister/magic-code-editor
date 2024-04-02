@@ -1,0 +1,38 @@
+{
+  "name": "magic-code-editor",
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/magic-code-editor.umd.cjs",
+  "module": "./dist/magic-code-editor.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/magic-code-editor.js",
+      "require": "./dist/magic-code-editor.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
+    "types": "vue-tsc ",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.21",
+    "highlight.js": "^11.9.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "typescript": "^5.4.3",
+    "@types/node": "^20.12.2",
+    "vue-tsc": "^2.0.7",
+    "vite": "^5.2.7"
+  },
+  "dependencies": {
+
+  }
+}

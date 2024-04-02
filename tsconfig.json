@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/App.vue",
+    "src/main.js",
+    "sitedocs"
+  ]
+}
