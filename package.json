@@ -22,17 +22,14 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "vue": "^3.4.21",
-    "highlight.js": "^11.9.0"
+    "highlight.js": "^11.9.0",
+    "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@types/node": "^20.12.2",
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.4.3",
-    "@types/node": "^20.12.2",
-    "vue-tsc": "^2.0.7",
-    "vite": "^5.2.7"
-  },
-  "dependencies": {
-
+    "vite": "^5.2.7",
+    "vue-tsc": "^2.0.7"
   }
 }
