@@ -23,11 +23,81 @@ const id = generateUniqSerial()
 const defaultBackgroundColor = '#0d1117'
 const extraLocationMap = {
   'top-left': {top: 10 + 'px', left: 10 + 'px'},
+  'center': {
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  },
+  'center-left': {
+    top: '50%',
+    left: '3%',
+    transform: 'translate(-50%, -50%)'
+  },
+  'center-right': {
+    top: '50%',
+    right: '0%',
+    transform: 'translate(-50%, -50%)'
+  },
   'top-right': {top: 10 + 'px', right: 10 + 'px'},
   'bottom-left': {bottom: 10 + 'px', left: 10 + 'px'},
-  'bottom-right': {bottom: 10 + 'px', right: 10 + 'px'}
+  'bottom-right': {bottom: 10 + 'px', right: 10 + 'px'},
+
 }
 const props = defineProps({
+  boxShadow: {
+    type: String,
+    default: 'none'
+  },
+
+  backgroundColor: {
+    type: String,
+    default: '#0d1117'
+  },
+
+  borderRadius: {
+    type: [Number, String],
+    default: 0
+  },
+
+  codeFontSize: {
+    type: [Number, String],
+    default: 20
+  },
+
+  codeColor: {
+    type: String,
+    default: 'white'
+  },
+
+  extraText: {
+    type: String,
+    default: null
+  },
+
+  extraLocation: {
+    type: String,
+    default: 'top-right'
+  },
+
+  footerFontSize: {
+    type: Number,
+    default: 15
+  },
+  paddingTop: {
+    type: [Number, String],
+    default: 1
+  },
+
+  paddingBottom: {
+    type: [Number, String],
+    default: 1,
+  },
+
+  paddingLeft: {
+    type: String,
+    default: '20px'
+  },
+
   highlight: {},
 
   headerText: {
@@ -44,19 +114,9 @@ const props = defineProps({
     default: false
   },
 
-  extraLocation: {
+  highlightRowBackgroundColor: {
     type: String,
-    default: 'top-right'
-  },
-
-  extraText: {
-    type: String,
-    default: null
-  },
-
-  backgroundColor: {
-    type: String,
-    default: '#0d1117'
+    default: 'rgba(112,112,112,0.05)'
   },
 
   headerBackgroundColor: {
@@ -69,14 +129,14 @@ const props = defineProps({
     default: 'inherit'
   },
 
+  headerFontSize: {
+    type: Number,
+    default: 15
+  },
+
   footerBackgroundColor: {
     type: [String, null],
     default: null
-  },
-
-  highlightRowBackgroundColor: {
-    type: String,
-    default: 'rgba(112,112,112,0.05)'
   },
 
   readOnly: {
@@ -94,14 +154,9 @@ const props = defineProps({
     default: null
   },
 
-  borderRadius: {
-    type: [Number, String],
-    default: 0
-  },
-
-  showLineNumber: {
-    type: Boolean,
-    default: true
+  lineNumberColor: {
+    type: String,
+    default: 'rgb(201, 209, 217)'
   },
 
   showHeader: {
@@ -119,34 +174,9 @@ const props = defineProps({
     default: true
   },
 
-  codeFontSize: {
-    type: [Number, String],
-    default: 20
-  },
-
-  headerFontSize: {
-    type: Number,
-    default: 15
-  },
-
-  footerFontSize: {
-    type: Number,
-    default: 15
-  },
-
-  paddingTop: {
-    type: [Number, String],
-    default: 1
-  },
-
-  paddingBottom: {
-    type: [Number, String],
-    default: 1,
-  },
-
-  paddingLeft: {
-    type: String,
-    default: '20px'
+  showLineNumber: {
+    type: Boolean,
+    default: true
   },
 
   tabSpaces: {
@@ -349,14 +379,12 @@ const wrappedText = computed(() => {
 
 onMounted(() => {
   if (props.highlightGroups) {
-    props.highlightRow = false;
     for (const group of props.highlightGroups) {
       for (var i = group.from; i <= group.to; i++) {
         highlightRow(i, group.color)
       }
     }
   }
-
 })
 
 </script>
@@ -364,7 +392,7 @@ onMounted(() => {
 <template>
   <!-- Code editor -->
   <div class="code-editor"
-       :style="{padding: '0', background: backgroundColor, borderRadius: borderRadius + 'px'}">
+       :style="{padding: '0', background: backgroundColor, borderRadius: borderRadius + 'px', boxShadow: boxShadow}">
 
     <!-- Header -->
     <div v-if="showHeader"
@@ -401,13 +429,15 @@ onMounted(() => {
              ref="lineNumbersRef"
              class="line-nums"
              :style="{
+                color: lineNumberColor,
+                opacity: '.3',
                 fontSize: codeFontSize + 'px',
                 paddingTop: paddingTop + 'px',
                 paddingBottom: paddingBottom + 'px',
                 top: codeTop + 'px'
           }">
           <div v-for="num in totalLineNumbers + 1"
-               :class="num === highLightedRow  ? 'line-highlight': ''">{{ num }}
+               :class="num === highLightedRow && props.highlightRow  ? 'line-highlight': ''">{{ num }}
           </div>
           <div>&nbsp;</div>
         </div>
@@ -417,7 +447,7 @@ onMounted(() => {
                   ref="textAreaRef"
                   spellcheck="false"
                   :autofocus="true"
-                  :readonly="readOnly"
+                  :readonly=readOnly
                   @scroll="scroll"
                   @selectionchange="onSelectionChange"
                   @focusout="onFocusOut"
@@ -437,7 +467,6 @@ onMounted(() => {
             marginBottom: '1px',
             marginLeft: lineNumberWidth + 'px',
             width: showLineNumber ? 'calc(100% - ' + lineNumberWidth + 'px)' : '100%',
-            color:'white',
             paddingLeft: paddingLeft,
             paddingTop: paddingTop + 'px',
             paddingRight: '20px',
@@ -450,14 +479,14 @@ onMounted(() => {
               top: codeTop + 'px',
               left: codeLeft + 'px',
               fontSize: codeFontSize + 'px',
-              color: 'white',
+              color: codeColor,
           }"><span
             v-html="wrappedText"
             :style="{
-              color: 'white'
+              color: codeColor
           }"/></code>
       </pre>
-        <div v-if="extraText"
+        <div v-if="extraText || extraLocation" id="extra_stuff"
              :style="{
                 position: 'absolute',
                 'z-index': 3,
@@ -465,6 +494,7 @@ onMounted(() => {
                 bottom: extraLocationMap[extraLocation].bottom,
                 left: extraLocationMap[extraLocation].left,
                 right: extraLocationMap[extraLocation].right,
+                transform: extraLocationMap[extraLocation].transform,
                 color: 'white'
         }">
           <slot name="extraText">
@@ -504,7 +534,7 @@ onMounted(() => {
 
 .line-nums {
   color: rgb(201, 209, 217);
-  opacity: .3;
+  opacity: .3 !important;
 }
 
 
@@ -536,8 +566,8 @@ onMounted(() => {
 .code-editor .code-area > pre > code,
 .code-editor .line-nums > div,
 .code-editor .header {
-  font-family: Consolas, Monaco, monospace;
-  line-height: 1.5;
+  font-family: Consolas, Monaco, monospace !important;
+  line-height: 1.5 !important;
 }
 
 .code-editor * {
