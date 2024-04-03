@@ -1,10 +1,11 @@
 {
   "name": "magic-code-editor",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "main": "./dist/magic-code-editor.umd.cjs",
   "module": "./dist/magic-code-editor.js",
   "types": "./dist/src/index.d.ts",
