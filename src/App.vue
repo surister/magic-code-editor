@@ -84,7 +84,18 @@ const text8 = `function Clock(props) {
   );
 }
 `
+const text9 = `import React from 'react';
 
+function MyComponent(props) {
+  if (props.isBar) {
+    return <div>Bar</div>;
+  }
+
+  return <div>Foo</div>;
+}
+
+export default MyComponent;`
+const text1_1 = 'mucho texto mucho text mucho texto mucho text  mucho texto mucho text  mucho texto mucho text  mucho texto mucho text  mucho texto mucho text '
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import bash from 'highlight.js/lib/languages/bash';
@@ -103,9 +114,6 @@ hljs.registerLanguage('rust', rust)
 </script>
 
 <template>
-  <div style="width: 650px">
-
-  </div>
   <div class="row">
     <div class="col col-auto">
       <CodeEditor v-model="text1"
@@ -171,6 +179,7 @@ hljs.registerLanguage('rust', rust)
                   max-lines="10"
                   min-lines="10"
                   code-font-size="25"
+                  :highlight-row="true"
                   :show-header="true"
                   :show-footer="true"
                   header-text="Code editor with 10 min lines. (SQL)"
@@ -179,7 +188,7 @@ hljs.registerLanguage('rust', rust)
       <CodeEditor v-model="text5"
                   background-color="rgb(22, 22, 24)"
                   :highlight-row="false"
-                  style="box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;"
+                  box-shadow="rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px"
                   :read-only="true"
                   border-radius="45"
                   code-font-size="30"
@@ -187,6 +196,7 @@ hljs.registerLanguage('rust', rust)
                   padding-bottom="10"
                   :show-line-number="false"
                   extra-text="sh"
+                  extra-location="center-right"
                   :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"/>
       <br>
       <CodeEditor v-model="text6"
@@ -199,7 +209,7 @@ hljs.registerLanguage('rust', rust)
                   padding-top="10"
                   padding-bottom="10"
                   :show-line-number="false"
-                  extra-text="sh"
+                  extra-location="center-right"
                   :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value">
         <template #extraText>
           <button @click="console.log('yo')">Copy</button>
@@ -241,11 +251,46 @@ hljs.registerLanguage('rust', rust)
                       {from: 15, to: 17, color:'green'}
                   ]">
         <template #headerText>
-          <span style="font-weight: bold; padding-top: 20px">CODE EDITOR WITH HIGHLIGHTED RANGES.</span>
+          <span
+              style="font-weight: bold; padding-top: 20px">CODE EDITOR WITH HIGHLIGHTED RANGES.</span>
         </template>
       </CodeEditor>
     </div>
+    <div style="padding-left:20px" class="col">
+      <CodeEditor v-model="text9"
+                  id="overrideColors"
+                  padding-top="10"
+                  padding-bottom="10"
+                  background-color="#f7f8fa"
+                  code-color="black"
+                  line-number-color="black"
+                  :highlight-groups="[
+                    {from: 1, to: 1, color: 'rgb(222, 223, 225)'},
+                    {from: 4, to: 6, color: 'rgb(222, 223, 225)'},
+                    {from: 11, to: 11, color:'rgb(222, 223, 225)'}
+                  ]"
+                  :read-only="true"
+                  :highlight="(text) => hljs.highlight(text, {language: 'javascript'}).value"/>
+      <div style="max-width: 900px">
+        <CodeEditor v-model="text1_1"
+                    background-color="rgb(22, 22, 24)"
+                    :highlight-row="false"
+                    box-shadow="rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px"
+                    :read-only="true"
+                    border-radius="45"
+                    code-font-size="15"
+                    :show-line-number="false"
+                    padding-bottom="10"
+                    padding-top="10"
+                    :min-lines="4"
+                    extra-text="sh"
+                    extra-location="center-right"
+                    :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"
+        />
+      </div>
+    </div>
   </div>
+
 </template>
 
 <style scoped>
