@@ -83,6 +83,16 @@ const props = defineProps({
     type: Number,
     default: 15
   },
+
+  onHighlightLineNumColor: {
+    type: String,
+
+  },
+
+  onHighlightLineNumBackgroundColor: {
+    type: String
+  },
+
   paddingTop: {
     type: [Number, String],
     default: 1
@@ -183,7 +193,6 @@ const props = defineProps({
     type: Number,
     default: 2
   }
-
 })
 
 const textAreaRef = ref(null)
@@ -369,7 +378,7 @@ const wrappedText = computed(() => {
 
   lines = lines.split('\n')
   let final = '';
-  var p = 0
+  let p = 0;
   for (const i in lines) {
     p += 1
     final += `<div id="${id}ln${p}" style="background-color: ${lines.length === 1 && props.highlightRow ? props.highlightRowBackgroundColor : ''}">${lines[i] !== '' ? lines[i] : ' '}</div>`
@@ -380,7 +389,7 @@ const wrappedText = computed(() => {
 onMounted(() => {
   if (props.highlightGroups) {
     for (const group of props.highlightGroups) {
-      for (var i = group.from; i <= group.to; i++) {
+      for (let i = group.from; i <= group.to; i++) {
         highlightRow(i, group.color)
       }
     }
@@ -437,7 +446,10 @@ onMounted(() => {
                 top: codeTop + 'px'
           }">
           <div v-for="num in totalLineNumbers + 1"
-               :class="num === highLightedRow && props.highlightRow  ? 'line-highlight': ''">{{ num }}
+               :class="num === highLightedRow && props.highlightRow  ? 'line-highlight': ''">
+            <div style="padding-right: 8px; padding-left: 8px;">
+              {{ num }}
+            </div>
           </div>
           <div>&nbsp;</div>
         </div>
@@ -528,7 +540,8 @@ onMounted(() => {
 
 <style>
 .line-nums .line-highlight {
-  color: rgb(201, 209, 217) !important;
+  color: v-bind(onHighlightLineNumColor);
+  background-color: v-bind(onHighlightLineNumBackgroundColor) !important;
   opacity: 1 !important;
 }
 
@@ -626,8 +639,8 @@ onMounted(() => {
 /* line-nums */
 .code-editor .line-nums {
   min-width: 36px;
-  padding-right: 8px;
-  padding-left: 8px;
+
+
   position: absolute;
   text-align: right;
   box-sizing: border-box;
