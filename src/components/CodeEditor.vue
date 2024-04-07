@@ -93,6 +93,21 @@ const props = defineProps({
     type: String
   },
 
+  onHighlightLineNumBorder: {
+    type: String,
+    default: '1px solid currentColor'
+  },
+
+  onHighlightLineNumWidth: {
+    type: String,
+    default: '0 0 0 0'
+  },
+
+  onHighlightLineNumOpacity: {
+    type: Number,
+    default: .8
+  },
+
   paddingTop: {
     type: [Number, String],
     default: 1
@@ -162,6 +177,12 @@ const props = defineProps({
   minLines: {
     type: [Number, String],
     default: null
+  },
+
+  lineNumberBorder: {
+    type: String,
+    default: '1px solid currentColor'
+
   },
 
   lineNumberColor: {
@@ -438,8 +459,8 @@ onMounted(() => {
              ref="lineNumbersRef"
              class="line-nums"
              :style="{
+                borderRight: lineNumberBorder,
                 color: lineNumberColor,
-                opacity: '.3',
                 fontSize: codeFontSize + 'px',
                 paddingTop: paddingTop + 'px',
                 paddingBottom: paddingBottom + 'px',
@@ -447,7 +468,7 @@ onMounted(() => {
           }">
           <div v-for="num in totalLineNumbers + 1"
                :class="num === highLightedRow && props.highlightRow  ? 'line-highlight': ''">
-            <div style="padding-right: 8px; padding-left: 8px;">
+            <div :style="{paddingRight: '8px', paddingLeft: '8px', opacity: num === highLightedRow && props.highlightRow ? props.onHighlightLineNumOpacity : '.3'}">
               {{ num }}
             </div>
           </div>
@@ -541,12 +562,13 @@ onMounted(() => {
 .line-nums .line-highlight {
   color: v-bind(onHighlightLineNumColor);
   background-color: v-bind(onHighlightLineNumBackgroundColor) !important;
-  opacity: 1 !important;
+  border: v-bind(onHighlightLineNumBorder);
+  border-width: v-bind(onHighlightLineNumWidth);
+  opacity: v-bind(onHighlightLineNumOpacity) !important;
 }
 
 .line-nums {
   color: rgb(201, 209, 217);
-  opacity: .3 !important;
 }
 
 
@@ -637,9 +659,4 @@ onMounted(() => {
   box-sizing: border-box;
   left: 0;
 }
-
-.code-editor .line-nums {
-  outline: 1px solid currentColor;
-}
-
 </style>
