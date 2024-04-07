@@ -465,6 +465,7 @@ onMounted(() => {
                   @focusout="onFocusOut"
                   @keydown.tab.prevent.stop="tab"
                   :style="{
+                    marginTop: '0',
                     paddingLeft: paddingLeft,
                     paddingTop: paddingTop + 'px',
                     marginLeft: lineNumberWidth + 'px',
@@ -475,8 +476,6 @@ onMounted(() => {
                     caretShape: '20px',
         }"/>
         <pre :style="{
-            marginTop: '1px', // This 1px adjustment is to tightly adjust to the native 1px textarea space.
-            marginBottom: '1px',
             marginLeft: lineNumberWidth + 'px',
             width: showLineNumber ? 'calc(100% - ' + lineNumberWidth + 'px)' : '100%',
             paddingLeft: paddingLeft,
@@ -560,12 +559,6 @@ onMounted(() => {
   height: 100%;
 }
 
-.border-top {
-  border-top: 1px solid rgba(201, 209, 217, .4);
-  border-bottom: 1px solid rgba(201, 209, 217, .4);
-}
-
-
 /* code-area */
 .code-editor .code-area {
   position: relative;
@@ -639,8 +632,6 @@ onMounted(() => {
 /* line-nums */
 .code-editor .line-nums {
   min-width: 36px;
-
-
   position: absolute;
   text-align: right;
   box-sizing: border-box;
