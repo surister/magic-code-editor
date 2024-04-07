@@ -84,30 +84,6 @@ const props = defineProps({
     default: 15
   },
 
-  onHighlightLineNumColor: {
-    type: String,
-
-  },
-
-  onHighlightLineNumBackgroundColor: {
-    type: String
-  },
-
-  onHighlightLineNumBorder: {
-    type: String,
-    default: '1px solid currentColor'
-  },
-
-  onHighlightLineNumWidth: {
-    type: String,
-    default: '0 0 0 0'
-  },
-
-  onHighlightLineNumOpacity: {
-    type: Number,
-    default: .8
-  },
-
   paddingTop: {
     type: [Number, String],
     default: 1
@@ -144,12 +120,36 @@ const props = defineProps({
     default: 'rgba(112,112,112,0.05)'
   },
 
+  highlightLineNumColor: {
+    type: String,
+  },
+
+  highlightLineNumBackgroundColor: {
+    type: String,
+    default: 'rgb(255, 95, 87)'
+  },
+
+  highlightLineNumBorder: {
+    type: String,
+    default: '1px solid currentColor'
+  },
+
+  highlightLineNumWidth: {
+    type: String,
+    default: '0 0 0 0'
+  },
+
+  highlightLineNumOpacity: {
+    type: Number,
+    default: .8
+  },
+
   headerBackgroundColor: {
     type: [String, null],
     default: null
   },
 
-  headerFontColor: {
+  headerColor: {
     type: String,
     default: 'inherit'
   },
@@ -188,6 +188,11 @@ const props = defineProps({
   lineNumberColor: {
     type: String,
     default: 'rgb(201, 209, 217)'
+  },
+
+  lineNumberOpacity: {
+    type: Number,
+    default: .3
   },
 
   showHeader: {
@@ -433,7 +438,7 @@ onMounted(() => {
         paddingTop: 6 + 'px',
         paddingLeft: 15 + 'px',
         paddingBottom: 6 + 'px',
-        color: headerFontColor,
+        color: headerColor,
         backgroundColor: headerBackgroundColor ? headerBackgroundColor : backgroundColor,
         fontSize: headerFontSize + 'px'}">
           <slot name="headerText">
@@ -468,7 +473,7 @@ onMounted(() => {
           }">
           <div v-for="num in totalLineNumbers + 1"
                :class="num === highLightedRow && props.highlightRow  ? 'line-highlight': ''">
-            <div :style="{paddingRight: '8px', paddingLeft: '8px', opacity: num === highLightedRow && props.highlightRow ? props.onHighlightLineNumOpacity : '.3'}">
+            <div :style="{paddingRight: '8px', paddingLeft: '8px', opacity: num === highLightedRow && props.highlightRow ? props.HighlightLineNumOpacity : props.lineNumberOpacity}">
               {{ num }}
             </div>
           </div>
@@ -560,11 +565,11 @@ onMounted(() => {
 
 <style>
 .line-nums .line-highlight {
-  color: v-bind(onHighlightLineNumColor);
-  background-color: v-bind(onHighlightLineNumBackgroundColor) !important;
-  border: v-bind(onHighlightLineNumBorder);
-  border-width: v-bind(onHighlightLineNumWidth);
-  opacity: v-bind(onHighlightLineNumOpacity) !important;
+  color: v-bind(HighlightLineNumColor);
+  background-color: v-bind(HighlightLineNumBackgroundColor) !important;
+  border: v-bind(HighlightLineNumBorder);
+  border-width: v-bind(HighlightLineNumWidth);
+  opacity: v-bind(HighlightLineNumOpacity) !important;
 }
 
 .line-nums {
