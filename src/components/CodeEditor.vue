@@ -86,17 +86,17 @@ const props = defineProps({
 
   paddingTop: {
     type: [Number, String],
-    default: 1
+    default: 5
   },
 
   paddingBottom: {
     type: [Number, String],
-    default: 1,
+    default: 5,
   },
 
   paddingLeft: {
-    type: String,
-    default: '20px'
+    type: Number,
+    default: 15
   },
 
   highlight: {},
@@ -126,7 +126,7 @@ const props = defineProps({
 
   highlightLineNumBackgroundColor: {
     type: String,
-    default: 'rgb(255, 95, 87)'
+    default: 'rgba(112,112,112,0.05)'
   },
 
   highlightLineNumBorder: {
@@ -141,7 +141,7 @@ const props = defineProps({
 
   highlightLineNumOpacity: {
     type: Number,
-    default: .8
+    default: 1
   },
 
   headerBackgroundColor: {
@@ -151,7 +151,7 @@ const props = defineProps({
 
   headerColor: {
     type: String,
-    default: 'inherit'
+    default: 'white'
   },
 
   headerFontSize: {
@@ -181,7 +181,7 @@ const props = defineProps({
 
   lineNumberBorder: {
     type: String,
-    default: '1px solid currentColor'
+    default: '1px solid rgb(201, 209, 217, .3)'
 
   },
 
@@ -407,7 +407,8 @@ const wrappedText = computed(() => {
   let p = 0;
   for (const i in lines) {
     p += 1
-    final += `<div id="${id}ln${p}" style="background-color: ${lines.length === 1 && props.highlightRow ? props.highlightRowBackgroundColor : ''}">${lines[i] !== '' ? lines[i] : ' '}</div>`
+    const backgroundColor = lines.length === 1 && props.highlightRow ? props.highlightRowBackgroundColor : ''
+    final += `<div id="${id}ln${p}" style="background-color: ${backgroundColor};">${lines[i] !== '' ? lines[i] : ' '}</div>`
   }
   return final
 })
@@ -477,7 +478,6 @@ onMounted(() => {
               {{ num }}
             </div>
           </div>
-          <div>&nbsp;</div>
         </div>
 
         <!-- Code - Editor Area -->
@@ -492,7 +492,7 @@ onMounted(() => {
                   @keydown.tab.prevent.stop="tab"
                   :style="{
                     marginTop: '0',
-                    paddingLeft: paddingLeft,
+                    paddingLeft: paddingLeft + 'px',
                     paddingTop: paddingTop + 'px',
                     marginLeft: lineNumberWidth + 'px',
                     width: showLineNumber ? 'calc(100% - ' + lineNumberWidth + 'px)' : '100%',
@@ -504,7 +504,7 @@ onMounted(() => {
         <pre :style="{
             marginLeft: lineNumberWidth + 'px',
             width: showLineNumber ? 'calc(100% - ' + lineNumberWidth + 'px)' : '100%',
-            paddingLeft: paddingLeft,
+            paddingLeft: paddingLeft + 'px',
             paddingTop: paddingTop + 'px',
             paddingRight: '20px',
             paddingBottom: paddingBottom + 'px',
@@ -565,11 +565,12 @@ onMounted(() => {
 
 <style>
 .line-nums .line-highlight {
-  color: v-bind(HighlightLineNumColor);
-  background-color: v-bind(HighlightLineNumBackgroundColor) !important;
-  border: v-bind(HighlightLineNumBorder);
-  border-width: v-bind(HighlightLineNumWidth);
-  opacity: v-bind(HighlightLineNumOpacity) !important;
+  color: v-bind(highlightLineNumColor);
+  background-color: v-bind(highlightLineNumBackgroundColor) !important;
+  border: v-bind(highlightLineNumBorder);
+  border-width: v-bind(highlightLineNumWidth);
+  opacity: v-bind(highlightLineNumOpacity) !important;
+  border-radius: v-bind(borderRadius);
 }
 
 .line-nums {
