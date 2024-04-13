@@ -1,4 +1,6 @@
 <script setup>
+import Install from "@/components/docs/Install.vue";
+
 const props = [
   {name: 'boxShadow', type: 'String', default: '\'none\'', required: false},
   {name: 'backgroundColor', type: 'String', default: '\'#0d1117\'', required: false},
@@ -36,12 +38,43 @@ const props = [
   {name: 'showBorderTop', type: 'Boolean', default: 'true', required: false},
   {name: 'showLineNumber', type: 'Boolean', default: 'true', required: false},
   {name: 'tabSpaces', type: 'Number', default: '2', required: false},
-
 ]
 </script>
 
 <template>
+  <h1 class="text-h3 font-weight-medium mt-10">Table of contents <a id="toc" href="/docs/#toc"></a>
+  </h1>
+  <v-list>
+    <v-list-item>
+      <v-list-item-title class="text-h6">Installing the library</v-list-item-title>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#npm">npm</a></v-list-item-subtitle>
+    </v-list-item>
+    <v-list-item>
+      <v-list-item-title class="text-h6">Simple usage</v-list-item-title>
+    </v-list-item>
+    <v-list-item>
+      <v-list-item-title class="text-h6">Customizing CodeBlocks/Editor</v-list-item-title>
+    </v-list-item>
+    <v-list-item>
+      <v-list-item-title class="text-h6">Syntax highlighting</v-list-item-title>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#how">How it works</a></v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-js">Highlight.js</a></v-list-item-subtitle>
+    </v-list-item>
+    <v-list-item>
+      <v-list-item-title class="text-h6">Advanced examples</v-list-item-title>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#copy-btn">Copy button</a></v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#h-ranges">Highlight ranges</a></v-list-item-subtitle>
+    </v-list-item>
+    <v-list-item>
+      <v-list-item-title id="props" class="text-h6">Props</v-list-item-title>
+    </v-list-item>
+  </v-list>
+
+  <install/>
+
   <h1 class="text-h3 font-weight-medium mt-10">Props</h1>
+
+
   <v-table class="mt-10">
     <thead>
     <tr>
@@ -60,9 +93,8 @@ const props = [
     </tr>
     </thead>
     <tbody>
-    <tr
-      v-for="item in props"
-      :key="item.name">
+    <tr v-for="item in props"
+        :key="item.name">
       <td>
         <v-chip class="font-weight-bold">{{ item.name }}</v-chip>
       </td>
@@ -75,5 +107,7 @@ const props = [
 </template>
 
 <style scoped>
-
+p {
+  font-size: 25px;
+}
 </style>

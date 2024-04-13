@@ -9,7 +9,7 @@ import xml from 'highlight.js/lib/languages/xml';
 import sql from 'highlight.js/lib/languages/pgsql'
 import rust from 'highlight.js/lib/languages/rust'
 import python from 'highlight.js/lib/languages/python'
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import CodeBlock from "@/components/CodeBlock.vue";
 
 hljs.registerLanguage('javascript', javascript);
@@ -19,7 +19,19 @@ hljs.registerLanguage('sql', sql)
 hljs.registerLanguage('rust', rust)
 hljs.registerLanguage('python', python)
 
-const text = '$ npm install magic-code-editor'
+const text = 'npm install magic-code-editor'
+const text_1 = `<script setupREPLACE_ME
+import {CodeEditor} from "magic-code-editor";
+import 'magic-code-editor/style.css'
+import {ref} from "vue";
+
+const text = ref('This is my amazing code.')
+</scriptREPLACE_ME
+
+<template>
+  <CodeEditor v-model="text"/>
+</template>`.replaceAll('REPLACE_ME', '>')
+const text_2 = ref(`This is my amazing code.`)
 const text1 = `# https://vitejs.dev/guide/#using-unreleased-commits
 
 # npm 7+, extra double-dash is needed:
@@ -34,9 +46,11 @@ pnpm create vite my-vue-app --template vue
 # bun
 bun create vite my-vue-app --template vue`
 const text1_1 = "echo 'hello-world\\nbye-world' | grep hello"
-const text4 = ref(`CREATE TABLE IF NOT EXISTS "doc"."weather_flink_sink" (
-  "inserted_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-  "location" OBJECT(DYNAMIC),
+const text4 = ref(`CREATE TABLE IF NOT EXISTS "doc"."weather_flink_sink"
+                   (
+                     "inserted_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+                     "location"    OBJECT(DYNAMIC
+                   ) ,
   "current" OBJECT(DYNAMIC)
 )
 
@@ -130,6 +144,18 @@ function MyComponent(props) {
 }
 
 export default MyComponent;`
+const text5 = `<template>
+  <div>
+   <h1>Welcome to the homepage</h1>
+  </div>
+</template>`
+const copied = ref(false)
+
+watch(() => copied.value, (newVal) => {
+  if (newVal) {
+    setTimeout(() => copied.value = false, 2000)
+  }
+})
 </script>
 <template>
   <v-row no-gutters>
@@ -155,32 +181,65 @@ export default MyComponent;`
         blocks.</h1>
     </v-col>
   </v-row>
-  <v-row class="mt-10">
+
+  <v-row class="pt-5">
     <v-col>
-      <v-label class="text-h4">Get started:</v-label>
-    </v-col>
-  </v-row>
-  <!--  Get started -->
-  <v-row>
-    <v-col>
-      <CodeEditor v-model="text"
-                  style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;"
-                  background-color="rgb(22, 22, 24)"
-                  :highlight-row="false"
-                  :read-only="true"
-                  border-radius="15"
-                  code-font-size="30"
-                  padding-top="10"
-                  padding-bottom="10"
-                  :show-line-number="false"
-                  extra-location="center-right"
-                  :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value">
-        <template #extraText>
-          <v-btn variant="outlined">
-            copy
-          </v-btn>
-        </template>
-      </CodeEditor>
+      <v-timeline side="end">
+        <v-timeline-item width="100%" :tile="true">
+          <template v-slot:opposite>
+            <v-label class="text-h4">Install the library</v-label>
+          </template>
+          <CodeEditor v-model="text"
+                      style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;"
+                      background-color="rgb(22, 22, 24)"
+                      :highlight-row="false"
+                      :read-only="true"
+                      border-radius="15"
+                      code-font-size="30"
+                      padding-top="10"
+                      padding-bottom="10"
+                      append-location="center-right"
+                      :show-line-number="false"
+                      :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value">
+            <template #appendText>
+              <v-btn variant="outlined" :color="copied ? 'success' : ''"
+                     :icon="copied ? 'mdi-check' : 'mdi-content-copy'" size="x-small"
+                     @click="copied = true">
+              </v-btn>
+            </template>
+          </CodeEditor>
+        </v-timeline-item>
+        <v-timeline-item width="100%" :tile="true">
+          <template v-slot:opposite>
+            <v-label class="text-h4">Import it</v-label>
+          </template>
+          <CodeEditor v-model="text_1"
+                      style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;"
+                      background-color="rgb(22, 22, 24)"
+                      :highlight-row="false"
+                      :read-only="true"
+                      border-radius="15"
+                      code-font-size="30"
+                      padding-top="10"
+                      padding-bottom="10"
+                      :append-inline="true"
+                      :show-line-number="false"
+                      :highlight="(text) => hljs.highlight(text, {language: 'html'}).value">
+            <template #appendText>
+              <v-btn variant="outlined" :color="copied ? 'success' : ''"
+                     :icon="copied ? 'mdi-check' : 'mdi-content-copy'" size="x-small"
+                     @click="copied = true">
+              </v-btn>
+            </template>
+          </CodeEditor>
+        </v-timeline-item>
+        <v-timeline-item width="100%">
+          <template v-slot:opposite>
+            <v-label class="text-h4">Enjoy!</v-label>
+          </template>
+          <CodeEditor v-model="text_2"></CodeEditor>
+        </v-timeline-item>
+      </v-timeline>
     </v-col>
   </v-row>
 
@@ -223,13 +282,13 @@ export default MyComponent;`
             <CodeEditor v-model="text1_1"
                         background-color="rgb(22, 22, 24)"
                         :highlight-row="false"
-                        box-shadow="rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px"
+                        box-shadow="rgba(240, 46, 170, 0.3) 5px 5px, rgba(240, 46, 170, 0.2) 10px 10px, rgba(240, 46, 170, 0.1) 15px 15px"
                         :read-only="true"
                         border-radius="45"
                         code-font-size="15"
                         :show-line-number="false"
-                        extra-text="sh"
-                        extra-location="center-right"
+                        prepend-text="sh"
+                        prepend-location="center-left"
                         :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"
             />
           </div>
@@ -277,6 +336,37 @@ export default MyComponent;`
   </v-row>
   <v-row>
     <v-col>
+      <CodeEditor v-model="text5"
+                  box-shadow="rgba(13, 17, 23, 0.4) -5px 5px, rgba(13, 17, 23, 0.3) -10px 10px, rgba(13, 17, 23, 0.2) -15px 15px"
+                  :show-header="true"
+                  :border-radius="25"
+                  :highlight-row="true"
+                  padding-top="5"
+                  padding-bottom="5"
+                  line-number-border="none"
+                  padding-left="0"
+                  on-highlight-line-num-color="rgb(179, 183, 194)"
+                  on-highlight-line-num-background-color="green"
+                  on-highlight-line-num-width="0"
+                  :highlight="(text) => hljs.highlight(text, {language: 'xml'}).value">
+        <template #appendText>
+          <v-badge icon="mdi-check" color="success" v-model="copied"
+                   transition="scale-rotate-transition">
+            <v-btn style="background-color: #0d1117" variant="outlined" @click="copied = true"
+                   :prepend-icon="copied ? 'mdi-hand-okay' : 'mdi-content-copy'"
+                   :text="copied ? 'COPIED': 'COPY'">
+            </v-btn>
+          </v-badge>
+        </template>
+        <template #header>
+          <div style="padding: 15px 10px 5px 10px">
+                <span v-for="color in ['rgb(255, 95, 87)', 'rgb(255, 188, 47)', 'rgb(40, 200, 64)']"
+                      class="dot"
+                      :style="{backgroundColor: color, marginLeft: '10px'}"></span>
+          </div>
+        </template>
+      </CodeEditor>
+      <br>
       <CodeEditor v-model="text7"
                   background-color="rgb(22, 22, 24)"
                   :highlight-row="true"
@@ -329,6 +419,7 @@ export default MyComponent;`
   <v-row>
     <v-col>
       <CodeEditor v-model="text9"
+                  box-shadow="rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em"
                   id="overrideColors"
                   padding-top="10"
                   padding-bottom="10"
@@ -365,8 +456,15 @@ export default MyComponent;`
 
 </template>
 <style>
-
 #overrideColors .hljs-title {
   color: #DB36A4 !important;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
 }
 </style>
