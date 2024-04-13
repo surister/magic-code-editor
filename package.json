@@ -1,6 +1,6 @@
 {
   "name": "magic-code-editor",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "files": [
     "dist"
@@ -9,6 +9,20 @@
   "main": "./dist/magic-code-editor.umd.cjs",
   "module": "./dist/magic-code-editor.js",
   "types": "./dist/src/index.d.ts",
+  "keywords": [
+    "editor",
+    "vuejs",
+    "component",
+    "vue3",
+    "code",
+    "code-editor",
+    "code-blocks",
+    "codeblocks",
+    "code-highlight",
+    "syntax highlight",
+    "syntax-highlight",
+    "code-highlighting-and-blocks"
+  ],
   "exports": {
     ".": {
       "import": "./dist/magic-code-editor.js",
