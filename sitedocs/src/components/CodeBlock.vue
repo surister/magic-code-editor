@@ -21,17 +21,17 @@ print(select_query.query)
 </script>
 
 <template>
-    <CodeEditor v-model="text"
-      header-text="python"
-      header-font-color="#c9d1d9"
-      background-color="rgb(36, 36, 36)"
-      border-radius="5"
-      :show-header="true"
-      :show-border-top="false"
-      :read-only="true"
-      :show-line-number="false"
-      :highlight="(text) => hljs.highlight(text, {language: 'python'}).value"
-    />
+  <CodeEditor v-model="text"
+              header-text="python"
+              header-font-color="#c9d1d9"
+              background-color="rgb(36, 36, 36)"
+              border-radius="5"
+              :show-header="true"
+              :show-border-top="false"
+              :read-only="true"
+              :show-line-number="false"
+              :highlight="(text) => hljs.highlight(text, {language: 'python'}).value"
+  />
 </template>
 
 <style scoped>

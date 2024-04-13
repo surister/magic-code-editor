@@ -71,10 +71,11 @@ for i in range(10):
 const myText = ref('Copy me!')
 
 const copied = ref(false)
-function copyToClipboard(text){
+
+function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then((res) => {
     copied.value = true
-    setTimeout(()=>{
+    setTimeout(() => {
       copied.value = false
       console.log('set to false')
     }, 2500)
@@ -132,6 +133,10 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
       </v-badgeREPLACE_ME
     </templateREPLACE_ME
 </CodeEditorREPLACE_ME`.replaceAll('REPLACE_ME', '>')
+
+const hlexample = `somelibrary.highlighter("let number = 1")
+<!-- Result -->
+<span class="token keyword">let</span> number = <span class="token number">1</span> `
 </script>
 
 <template>
@@ -139,8 +144,8 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
   <v-divider class="mb-5"></v-divider>
   <p class="pt-5">The library is uploaded to NPM.</p>
   <br>
-  <DocCodeBlock text="npm install magic-code-editor" prepend-text="sh"/>
-  <h1 class="text-h3 font-weight-medium mt-10">Getting started</h1>
+  <DocCodeBlock text="npm install magic-code-editor" prepend-text="$"/>
+  <h1 class="text-h3 font-weight-medium mt-10" id="getting-started">Getting started</h1>
   <v-divider class="mb-5"></v-divider>
   Once installed you need to import the <span class="font-weight-bold">component</span> and the
   <span class="font-weight-bold">css.</span>
@@ -153,23 +158,29 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
   <p>The component has many things that can be customized, sizes, colors, borders,
     alignment, content... see #props for a detailed list.</p>
   <p>
-    There is a visual code block builder that can be really nice when customizing your own code
+    There is a <a href="/builder">visual code block builder</a> that can be really nice when customizing your own code
     block.
   </p>
 
   <h1 class="text-h3 font-weight-medium mt-10">Syntax highlighting</h1>
   <v-divider class="mb-5"></v-divider>
-  <h2 class="mt-5">How it works</h2>
+  <h2 class="mt-5" id="how-it-works">How it works <a href="/docs/#how-it-works">
+    <v-icon>mdi-link</v-icon>
+  </a></h2>
   <p class="pt-5 pb-5">
-    By default the library does not support any specific syntax highlighter, but rather, offers a
-    callback
+    By default the library does not support any specific syntax highlighter, but rather, has a callback
     <span class="font-weight-bold">highlight</span>
-    that can be used to transform the text before displaying it.
+    that allows to apply text transformation and thus, any highlighter.
+    <br><br>
+    Text highlighters commonly parse the given text and then wrapp the appropiate pieces into 'spans' tags with
+    classes. For example:
+    <br>
+    <DocCodeBlock :text="hlexample" :font-size="20" class="mt-5"></DocCodeBlock>
   </p>
   <p class="mb-5">We can use this callback to transform the text in many different ways, when not
-    applied, text is automatically escaped, so tags can be displayed,</p>
+    applied, text is automatically escaped, so tags can be displayed:</p>
 
-  <DocCodeBlock :text="text_2"></DocCodeBlock>
+  <DocCodeBlock :text="text_2" class="mt-5"></DocCodeBlock>
 
   <p class="mt-5">Results in:</p>
   <CodeEditor class="mt-5" text="<p>Tags are rendered but not highlighted</p>"></CodeEditor>
@@ -182,13 +193,14 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
     when no highlight is applied, you would have to escape the text yourself, this is only
     relevant if you want to display tags and do your own custom highligthing.
   </p>
+  <h2 class="mt-5" id="highlight-js">Highlighting with highlight.js<a href="/docs/#highlight-js">
+    <v-icon>mdi-link</v-icon>
+  </a></h2>
 
-  <h2 class="mt-5">Highlighting with highlight.js</h2>
   <p class="mt-5">Most likely you would want to use a text highlighting library that already exists,
-    doing it yourselve
-    can be a bit cumbersome, highlight.js is a very popular one.</p>
+    doing it yourself can be a hard, highlight.js is a very popular one.</p>
   <br>
-  <p>You would use highlight.js as you normally would thanks to the highlight callback.</p>
+  <p>You would use highlight.js as you normally would, apply the text transformation with the highlight callback.</p>
 
   <DocCodeBlock class="mt-5" :text="text_4" :font-size="20"
                 append-location="top-right"></DocCodeBlock>
@@ -209,8 +221,8 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
 
   <h1 class="text-h3 font-weight-medium mt-10">Advanced examples</h1>
   <v-divider class="mb-5"></v-divider>
-  <h2 class="mt-5">Copy button <a href="/docs/#copy-btn">
-    <v-icon id="copy-btn">mdi-link</v-icon>
+  <h2 class="mt-5" id="copy-button">Copy button <a href="/docs/#copy-button">
+    <v-icon>mdi-link</v-icon>
   </a></h2>
 
   <p>We do not have any copy-to-clipboard javascript, you should implement it yourself.</p><br>
@@ -219,7 +231,7 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
     the text for a couple of seconds upon copy. The 'v-tags' that you see are from
     Vuetify, the components libraries that I'm using, in your case you might use different.</p>
 
-  <DocCodeBlock class="mt-5" v-model="copyBtnExample" font-size="20" append-location="top-right"></DocCodeBlock>
+  <DocCodeBlock class="mt-5" v-model="copyBtnExample" :font-size="20" append-location="top-right"></DocCodeBlock>
   <br>
   <CodeEditor show-header v-model="myText">
     <template #header>
@@ -235,11 +247,11 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
   </CodeEditor>
 
   <p class="pt-5">You can create cuter buttons, like this one (Done with Vuetify) but that's beyond
-  our scope and it's up to the developer.</p>
+    our scope and it's up to the developer.</p>
   <br>
-  <DocCodeBlock v-model="copyBtnExample2" font-size="20" append-location="top-right"></DocCodeBlock>
+  <DocCodeBlock v-model="copyBtnExample2" :font-size="20" append-location="top-right"></DocCodeBlock>
   <br>
-  <CodeEditor show-header header-color="white" >
+  <CodeEditor show-header header-color="white">
     <template #headerText>
       <v-badge icon="mdi-check" color="success" v-model="copied"
                transition="scale-rotate-transition">
@@ -250,11 +262,18 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
       </v-badge>
     </template>
   </CodeEditor>
+
+  <h2 class="mt-5" id="highlight-ranges">Highlight ranges <a href="/docs/#highlight-ranges">
+    <v-icon>mdi-link</v-icon>
+  </a></h2>
 </template>
 
 <style scoped>
 p {
   font-size: 25px;
 }
-h2 { font-size: 30px}
+
+h2 {
+  font-size: 30px
+}
 </style>

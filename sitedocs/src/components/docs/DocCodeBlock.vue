@@ -17,7 +17,10 @@ const props = defineProps({
     type: String,
   },
   appendText: {},
-  fontSize: {}
+  fontSize: {
+    type: Number,
+    default: 20
+  }
 })
 
 const copied = ref(false)

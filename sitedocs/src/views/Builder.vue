@@ -1,5 +1,4 @@
 <script setup>
-
 import CodeEditor from "../../../src/components/CodeEditor.vue";
 import {computed, ref} from "vue";
 import ColorPicker from "@/components/ColorPicker.vue";
