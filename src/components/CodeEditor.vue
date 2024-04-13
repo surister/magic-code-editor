@@ -1,15 +1,6 @@
 <script setup>
 import {computed, nextTick, onMounted, ref} from "vue";
 
-let model = defineModel()
-
-if (!model.value) {
-  model = ref('')
-}
-
-function between(x, min, max) {
-  return x >= min && x <= max;
-}
 
 function generateUniqSerial() {
   return 'xxxx-xxxx'.replace(/[x]/g, (c) => {
@@ -20,9 +11,11 @@ function generateUniqSerial() {
 
 const id = generateUniqSerial()
 
-const defaultBackgroundColor = '#0d1117'
 const extraLocationMap = {
-  'top-left': {top: 10 + 'px', left: 10 + 'px'},
+  'top-left': {
+    top: 10 + 'px',
+    left: 10 + 'px'
+  },
   'center': {
     top: '50%',
     left: '50%',
@@ -30,7 +23,7 @@ const extraLocationMap = {
   },
   'center-left': {
     top: '50%',
-    left: '3%',
+    left: 20 + 'px',
     transform: 'translate(-50%, -50%)'
   },
   'center-right': {
@@ -41,9 +34,14 @@ const extraLocationMap = {
   'top-right': {top: 10 + 'px', right: 10 + 'px'},
   'bottom-left': {bottom: 10 + 'px', left: 10 + 'px'},
   'bottom-right': {bottom: 10 + 'px', right: 10 + 'px'},
-
 }
+
 const props = defineProps({
+  text: {
+    type: String,
+    default: ''
+  },
+
   boxShadow: {
     type: String,
     default: 'none'
@@ -69,14 +67,19 @@ const props = defineProps({
     default: 'white'
   },
 
-  extraText: {
+  appendText: {
     type: String,
     default: null
   },
 
-  extraLocation: {
+  appendLocation: {
     type: String,
     default: 'top-right'
+  },
+
+  appendInline: {
+    type: Boolean,
+    default: true,
   },
 
   footerFontSize: {
@@ -218,12 +221,37 @@ const props = defineProps({
   tabSpaces: {
     type: Number,
     default: 2
+  },
+
+  prependInline: {
+    type: Boolean,
+    default: true
+  },
+
+  prependText: {
+    type: String,
+    default: ''
+  },
+
+  prependLocation: {
+    type: String,
+    default: "top-left"
   }
 })
+
+let model = defineModel()
+
+if (!model.value) {
+  model = ref(props.text)
+}
 
 const textAreaRef = ref(null)
 const lineNumbersRef = ref(null)
 const codeRef = ref();
+const prependRef = ref(null)
+const paddingLeft = ref(props.paddingLeft)
+
+// The current highlighted row.
 const highLightedRow = ref(1)
 
 const totalLineNumbers = computed(() => {
@@ -414,6 +442,10 @@ const wrappedText = computed(() => {
 })
 
 onMounted(() => {
+  if (props.prependInline && prependRef.value) {
+    paddingLeft.value = Number.parseInt(paddingLeft.value) + Number.parseInt(prependRef.value.offsetWidth) + 5
+  }
+
   if (props.highlightGroups) {
     for (const group of props.highlightGroups) {
       for (let i = group.from; i <= group.to; i++) {
@@ -474,14 +506,15 @@ onMounted(() => {
           }">
           <div v-for="num in totalLineNumbers + 1"
                :class="num === highLightedRow && props.highlightRow  ? 'line-highlight': ''">
-            <div :style="{paddingRight: '8px', paddingLeft: '8px', opacity: num === highLightedRow && props.highlightRow ? props.HighlightLineNumOpacity : props.lineNumberOpacity}">
+            <div
+                :style="{paddingRight: '8px', paddingLeft: '8px', opacity: num === highLightedRow && props.highlightRow ? props.HighlightLineNumOpacity : props.lineNumberOpacity}">
               {{ num }}
             </div>
           </div>
         </div>
 
         <!-- Code - Editor Area -->
-        <textarea v-model="model"
+        <textarea v-if="!readOnly" v-model="model"
                   ref="textAreaRef"
                   spellcheck="false"
                   :autofocus="true"
@@ -520,22 +553,39 @@ onMounted(() => {
           }"><span
             v-html="wrappedText"
             :style="{
-              color: codeColor
+              color: codeColor,
+              display:'inline'
           }"/></code>
       </pre>
-        <div v-if="extraText || extraLocation" id="extra_stuff"
+        <div v-if="prependText || prependLocation" ref="prependRef"
              :style="{
                 position: 'absolute',
                 'z-index': 3,
-                top: extraLocationMap[extraLocation].top,
-                bottom: extraLocationMap[extraLocation].bottom,
-                left: extraLocationMap[extraLocation].left,
-                right: extraLocationMap[extraLocation].right,
-                transform: extraLocationMap[extraLocation].transform,
+                top: extraLocationMap[prependLocation].top,
+                bottom: extraLocationMap[prependLocation].bottom,
+                left: extraLocationMap[prependLocation].left,
+                right: extraLocationMap[prependLocation].right,
+                transform: extraLocationMap[prependLocation].transform,
                 color: 'white'
         }">
-          <slot name="extraText">
-            {{ extraText }}
+          <slot name="prependText">
+            {{ prependText }}
+          </slot>
+        </div>
+
+        <div v-if="appendText || appendLocation" id="extra_stuff"
+             :style="{
+                position: 'absolute',
+                'z-index': 3,
+                top: extraLocationMap[appendLocation].top,
+                bottom: extraLocationMap[appendLocation].bottom,
+                left: extraLocationMap[appendLocation].left,
+                right: extraLocationMap[appendLocation].right,
+                transform: extraLocationMap[appendLocation].transform,
+                color: 'white'
+        }">
+          <slot name="appendText">
+            {{ appendText }}
           </slot>
         </div>
       </div>
