@@ -49,7 +49,7 @@ const text7 = `// This is a comment, and is ignored by the compiler.
 // shortcut.
 //
 // This code is editable, feel free to hack it!
-// You can always return to the original code by clicking the "Reset" button ->
+// You can always return to the original code by clicking the "Reset" button -> ........................................................................
 
 // This is the main function.
 fn main() {
@@ -114,8 +114,30 @@ hljs.registerLanguage('rust', rust)
 </script>
 
 <template>
+  <pre>
+    <code>
+      <span>one</span><span><span>yp</span></span>
+    </code>
+
+  </pre>
   <div class="row">
     <div class="col col-auto">
+      <CodeEditor text="pip install cratedb-sqlparse"
+                  background-color="rgb(22, 22, 24)"
+                  :highlight-row="false"
+                  box-shadow="rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px"
+                  :read-only="true"
+                  border-radius="45"
+                  code-font-size="30"
+                  padding-top="10"
+                  padding-bottom="10"
+                  :show-line-number="false"
+                  append-text="sh"
+                  prepend-text="yo"
+                  :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value">
+      </CodeEditor>
+
+      <br>
       <CodeEditor v-model="text1"
                   background-color="rgb(22, 22, 24)"
                   :highlight-row="false"
@@ -126,8 +148,7 @@ hljs.registerLanguage('rust', rust)
                   padding-bottom="10"
                   :show-line-number="false"
                   :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"
-      />
-      <br>
+      /><br>
       <CodeEditor v-model="text2"
                   header-text="js"
                   header-font-color="#c9d1d9"
@@ -141,8 +162,7 @@ hljs.registerLanguage('rust', rust)
                   padding-bottom="10"
                   :show-line-number="false"
                   :highlight="(text) => hljs.highlight(text, {language: 'javascript'}).value"
-      />
-      <br>
+      /><br>
       <CodeEditor v-model="text3"
                   header-background-color="rgb(3, 4, 32)"
                   header-font-color="#c9d1d9"
@@ -171,9 +191,9 @@ hljs.registerLanguage('rust', rust)
           </div>
         </template>
 
-      </CodeEditor>
+      </CodeEditor><br>
     </div>
-    <div class="col" style="padding-left:20px">
+    <div class="col col-auto" style="padding-left: 20px">
       <CodeEditor v-model="text4"
                   header-font-color="#c9d1d9"
                   max-lines="10"
@@ -182,9 +202,11 @@ hljs.registerLanguage('rust', rust)
                   :highlight-row="true"
                   :show-header="true"
                   :show-footer="true"
+                  on-highlight-line-num-background-color="rgba(255,200,0,0.1)"
+                  on-highlight-line-num-color="blue"
+                  line-number-border="none"
                   header-text="Code editor with 10 min lines. (SQL)"
-                  :highlight="(text) => hljs.highlight(text, {language: 'sql'}).value"/>
-      <br>
+                  :highlight="(text) => hljs.highlight(text, {language: 'sql'}).value"/><br>
       <CodeEditor v-model="text5"
                   background-color="rgb(22, 22, 24)"
                   :highlight-row="false"
@@ -197,8 +219,7 @@ hljs.registerLanguage('rust', rust)
                   :show-line-number="false"
                   extra-text="sh"
                   extra-location="center-right"
-                  :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"/>
-      <br>
+                  :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"/><br>
       <CodeEditor v-model="text6"
                   style="box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;"
                   background-color="rgb(22, 22, 24)"
@@ -214,8 +235,7 @@ hljs.registerLanguage('rust', rust)
         <template #extraText>
           <button @click="console.log('yo')">Copy</button>
         </template>
-      </CodeEditor>
-      <br>
+      </CodeEditor><br>
       <CodeEditor v-model="text7"
                   background-color="rgb(22, 22, 24)"
                   :highlight-row="true"
@@ -225,13 +245,14 @@ hljs.registerLanguage('rust', rust)
                   code-font-size="15"
                   padding-top="10"
                   padding-bottom="10"
-                  :show-line-number="false"
+                  :show-line-number="true"
                   :show-footer="true"
                   extra-text="rust"
+                  line-number-border="none"
                   footer-background-color="brown"
                   :highlight="(text) => hljs.highlight(text, {language: 'rust'}).value">
         <template #footer-text>/project/dist/main.rs</template>
-      </CodeEditor>
+      </CodeEditor><br>
     </div>
   </div>
   <br>
@@ -240,7 +261,7 @@ hljs.registerLanguage('rust', rust)
       <CodeEditor v-model="text8"
                   code-font-size="20"
                   border-radius="10"
-                  header-background-color="rgb(204, 207, 212)"
+
                   background-color="#212121"
                   :show-header="true"
                   :show-footer="false"
@@ -288,6 +309,28 @@ hljs.registerLanguage('rust', rust)
                     :highlight="(text) => hljs.highlight(text, {language: 'bash'}).value"
         />
       </div>
+      <br>
+      <br>
+      <CodeEditor v-model="text3"
+          :show-header="true"
+          :border-radius="25"
+          :highlight-row="true"
+          padding-top="5"
+          padding-bottom="5"
+          line-number-border="none"
+          on-highlight-line-num-color="rgb(179, 183, 194)"
+          on-highlight-line-num-background-color="green"
+          on-highlight-line-num-width="0"
+          :highlight="(text) => hljs.highlight(text, {language: 'xml'}).value"
+      >
+        <template #header>
+          <div style="padding: 15px 10px 5px 10px">
+                <span v-for="color in ['rgb(255, 95, 87)', 'rgb(255, 188, 47)', 'rgb(40, 200, 64)']"
+                      class="dot"
+                      :style="{backgroundColor: color, marginLeft: '10px'}"></span>
+          </div>
+        </template>
+      </CodeEditor>
     </div>
   </div>
 
@@ -312,4 +355,11 @@ hljs.registerLanguage('rust', rust)
   max-width: 100%
 }
 
+.dot {
+  height: 20px;
+  width: 20px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
 </style>
