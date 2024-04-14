@@ -442,7 +442,7 @@ const wrappedText = computed(() => {
 })
 
 onMounted(() => {
-  if (props.prependInline && prependRef.value) {
+  if (props.prependInline && prependRef.value && props.prependText) {
     paddingLeft.value = Number.parseInt(paddingLeft.value) + Number.parseInt(prependRef.value.offsetWidth) + 5
   }
 
