@@ -220,7 +220,9 @@ const hlexample = `somelibrary.highlighter("let number = 1")
   />
 
   <h1 class="text-h3 font-weight-medium mt-10">Advanced examples</h1>
-  <v-divider class="mb-5"></v-divider>
+
+  <v-divider class="mb-5"/>
+
   <h2 class="mt-5" id="copy-button">Copy button <a href="/docs/#copy-button">
     <v-icon>mdi-link</v-icon>
   </a></h2>
