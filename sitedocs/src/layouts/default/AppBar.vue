@@ -10,6 +10,7 @@
       </v-btn>
     </v-app-bar-title>
     <template v-slot:append>
+      <v-chip>Docs built for {{ version }}</v-chip>
       <v-btn size="x-large" prepend-icon="mdi-file-document" to="/builder">BLOCK BUILDER</v-btn>
       <v-btn size="x-large" prepend-icon="mdi-file-document" to="/docs">DOCS</v-btn>
     </template>
@@ -17,5 +18,5 @@
 </template>
 
 <script setup>
-//
+const version = import.meta.env.VITE_APP_VERSION
 </script>
