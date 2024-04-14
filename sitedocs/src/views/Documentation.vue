@@ -305,28 +305,28 @@ const props = [
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Syntax highlighting</v-list-item-title>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#how-it-works">How it works</a>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#how-it-works">How it works</a>
       </v-list-item-subtitle>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-js">Highlight.js</a>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#highlight-js">Highlight.js</a>
       </v-list-item-subtitle>
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Advanced examples</v-list-item-title>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#copy-button">Copy button</a>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#copy-button">Copy button</a>
       </v-list-item-subtitle>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-ranges">Highlight ranges</a>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#highlight-ranges">Highlight ranges</a>
       </v-list-item-subtitle>
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Props</v-list-item-title>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#props">Prop list</a>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#props">Prop list</a>
       </v-list-item-subtitle>
     </v-list-item>
   </v-list>
 
   <install/>
 
-  <h1 class="text-h3 font-weight-medium mt-10">Props<a href="/docs/#props">
+  <h1 class="text-h3 font-weight-medium mt-10">Props<a href="/docs#props">
     <v-icon id="props" style="font-size: 40px">mdi-link</v-icon>
   </a>
   </h1>
