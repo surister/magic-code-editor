@@ -288,7 +288,8 @@ const props = [
 </script>
 
 <template>
-  <h1 class="text-h3 font-weight-medium mt-10">Table of contents <a id="toc" href="/docs/#toc"/></h1>
+  <h1 class="text-h3 font-weight-medium mt-10">Table of contents <a id="toc" href="/docs/#toc"/>
+  </h1>
   <v-list>
     <v-list-item>
       <v-list-item-title class="text-h6">Installing the library</v-list-item-title>
@@ -296,33 +297,39 @@ const props = [
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Simple usage</v-list-item-title>
-      <v-list-item-subtitle><a class="ml-5" href="/docs#getting-started">Getting started</a></v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs#getting-started">Getting started</a>
+      </v-list-item-subtitle>
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Customizing CodeBlocks/Editor</v-list-item-title>
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Syntax highlighting</v-list-item-title>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#how-it-works">How it works</a></v-list-item-subtitle>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-js">Highlight.js</a></v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#how-it-works">How it works</a>
+      </v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-js">Highlight.js</a>
+      </v-list-item-subtitle>
     </v-list-item>
     <v-list-item>
       <v-list-item-title class="text-h6">Advanced examples</v-list-item-title>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#copy-button">Copy button</a></v-list-item-subtitle>
-      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-ranges">Highlight ranges</a></v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#copy-button">Copy button</a>
+      </v-list-item-subtitle>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#highlight-ranges">Highlight ranges</a>
+      </v-list-item-subtitle>
     </v-list-item>
     <v-list-item>
-      <v-list-item-title id="props" class="text-h6">Props</v-list-item-title>
+      <v-list-item-title class="text-h6">Props</v-list-item-title>
+      <v-list-item-subtitle><a class="ml-5" href="/docs/#props">Prop list</a>
+      </v-list-item-subtitle>
     </v-list-item>
   </v-list>
 
   <install/>
 
-  <h1 class="text-h3 font-weight-medium mt-10"><a>Props
-    <v-icon id="how-it-works" style="font-size: 40px">mdi-link</v-icon>
+  <h1 class="text-h3 font-weight-medium mt-10">Props<a href="/docs/#props">
+    <v-icon id="props" style="font-size: 40px">mdi-link</v-icon>
   </a>
   </h1>
-
 
   <v-table class="mt-10">
     <thead>

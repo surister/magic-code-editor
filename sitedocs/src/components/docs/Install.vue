@@ -137,6 +137,15 @@ const copyBtnExample2 = `<CodeEditor show-header header-color="white"REPLACE_ME
 const hlexample = `somelibrary.highlighter("let number = 1")
 <!-- Result -->
 <span class="token keyword">let</span> number = <span class="token number">1</span> `
+const ranges = [
+  {from: 1, to: 1, color:'blue'},
+  {from: 4, to: 6, color: 'rgba(139,0,0,0.40)'},
+]
+const hrangesExample = `const ranges = [
+  {from: 1, to: 1, color:'blue'},
+  {from: 4, to: 6, color: 'rgba(139,0,0,0.40)'},
+]`
+const hrangesExample2 = `<CodeEditor :highlightGroups="ranges" text="1\\n2\\n3\\n4\\n5\\n6"/>`
 </script>
 
 <template>
@@ -268,6 +277,16 @@ const hlexample = `somelibrary.highlighter("let number = 1")
   <h2 class="mt-5" id="highlight-ranges">Highlight ranges <a href="/docs/#highlight-ranges">
     <v-icon>mdi-link</v-icon>
   </a></h2>
+  <p class="mt-5">You can highlight several line ranges, with the prop <span class="font-weight-bold">highlightGroups.</span></p>
+  <DocCodeBlock class="mt-5" :text="hrangesExample" ></DocCodeBlock>
+  <DocCodeBlock class="mt-5" :text="hrangesExample2"></DocCodeBlock>
+  <p class="mt-5">Results in:</p>
+  <CodeEditor class="mt-5" :highlightGroups="ranges" text="1
+2
+3
+4
+5
+6"></CodeEditor>
 </template>
 
 <style scoped>
