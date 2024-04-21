@@ -12,6 +12,7 @@ services:
       - NGINX_HOST=mce.surister.dev
     volumes:
       - ./dist/:/usr/share/nginx/html
+        - ./default.conf:/etc/nginx/conf.d/default.conf
 
 networks:
   proxy:
